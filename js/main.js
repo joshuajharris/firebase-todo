@@ -4,7 +4,7 @@ var ref = new Firebase(refURL);
 function checkTask(el) {
   var taskId = String($(el).parent().attr("id"));
   var task = ref.child(taskId);
-  task.child("state").on('value', function(snap) {
+  task.child("state").once('value', function(snap) {
     var taskState = snap.val();
     if(taskState === "active") {
       ref.child(taskId).update({state: "closed"});
@@ -33,7 +33,7 @@ $(document).ready(function() {
       else if(todo.state === "closed") {
         $("#closed").append(
           '<div id=\"' + todo.id + '\">' +
-            '<input type="checkbox" onchange="checkTask(this)"/>' +
+            '<input type="checkbox" onchange="checkTask(this)" checked="checked"/>' +
             ' <b>' + todo.task + '</b>' +
           '</div>'
         );
